@@ -5,7 +5,7 @@ FastSLAM for range-bearing landmark observations. Each particle tracks a robot p
 ## Run
 
 ```bash
-python ex7.py
+python mobile_robotics_fastslam.py
 ```
 
 Runtime parameters are stored in `params.txt`.
