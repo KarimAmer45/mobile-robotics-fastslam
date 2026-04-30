@@ -9,3 +9,24 @@ python ex7.py
 ```
 
 Runtime parameters are stored in `params.txt`.
+
+## Result screenshots
+
+![mobile-robotics-fastslam result screenshot](docs/results/result-screenshot.png)
+
+Ground-truth landmark map and robot sensor setup used by the FastSLAM experiment.
+
+
+## What this demonstrates
+
+- FastSLAM structure with per-particle landmark EKFs.
+- Prediction, landmark initialization, correction, weighting, and selective resampling.
+- Parameter-driven experiments against a prepared office-map dataset.
+
+
+## Limitations and next steps
+
+- The full visualization path is heavier than the compact README smoke test.
+- Performance depends on particle count and noise assumptions in params.txt.
+- Next steps: save trajectory overlays automatically and add runtime/accuracy summaries.
+
