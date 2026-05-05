@@ -10,21 +10,21 @@ python mobile_robotics_fastslam.py
 
 Runtime parameters are stored in `params.txt`.
 
-## Example output
+## SLAM output
 
 ![mobile-robotics-fastslam result screenshot](docs/results/result-screenshot.png)
 
 Ground-truth landmark map and robot sensor setup used by the FastSLAM experiment.
 
 
-## Algorithm notes
+## Particle-filter notes
 
 - FastSLAM structure with per-particle landmark EKFs.
 - Prediction, landmark initialization, correction, weighting, and selective resampling.
 - Parameter-driven experiments against a prepared office-map dataset.
 
 
-## Validation and next steps
+## Evaluation notes
 
 - The full visualization path is heavier than the compact README smoke test.
 - Performance depends on particle count and noise assumptions in params.txt.
