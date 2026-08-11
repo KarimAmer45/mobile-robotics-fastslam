@@ -20,7 +20,6 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import Circle, Ellipse
 from PIL import Image
 
-TODO = None
 
 
 class Particle(object):
@@ -86,7 +85,6 @@ class Particle(object):
         s_trans = self.motion_noise[1]
         s_rot2 = self.motion_noise[2]
 
-        ##STUDENT_CODE: #TODO Q1: Estimate the new position of the particle
 
 
 
@@ -103,7 +101,6 @@ class Particle(object):
 
 
 
-        ##END_STUDENT_CODE
 
     def correction_step(self, sensor_measurements):
         """Weight the particles according to the current map of the particle and the landmark observations z.
@@ -126,7 +123,6 @@ class Particle(object):
                 # Obtain Jacobian
                 _, H = self.measurement_model(landmark)
 
-                ##STUDENT_CODE: #TODO Q3 A:  Use the inverse measurement model to initialize the EKF for this landmark
 
                 bearing = measurement.z_bearing + self.pose[2, 0]
                 landmark_mu = np.array(
@@ -149,7 +145,6 @@ class Particle(object):
                 landmark.sigma = G_z @ Q_t @ G_z.T
 
 
-                ##END_STUDENT_CODE
                 landmark.observed = True
 
             # EKF Update on landmark
@@ -158,7 +153,6 @@ class Particle(object):
                 # Obtain expected measurement and Jacobian
                 expected_z, H = self.measurement_model(landmark)
 
-                ##STUDENT_CODE: #TODO Q3 B: Correction step of the EKF filter
 
                 # Compute the innovation covariance
                 innovation_cov = H @ landmark.sigma @ H.T + Q_t
@@ -179,7 +173,6 @@ class Particle(object):
                 landmark.mu = landmark.mu + K @ innovation
                 landmark.sigma = (np.eye(2) - K @ H) @ landmark.sigma
 
-                ##STUDENT_CODE: #TODO Q3 C: Compute the likelihood of the observation
 
                 # Gaussian likelihood: p(z | mu, Sigma)
                 det = max(np.linalg.det(innovation_cov), 1e-12)
@@ -192,7 +185,6 @@ class Particle(object):
                 joint_likelihood *= max(float(likelihood), 1e-300)
 
 
-                ##END_STUDENT_CODE
 
         # Multiply with the former weight
         self.weight *= joint_likelihood
@@ -210,7 +202,6 @@ class Particle(object):
         landmark_x = landmark_ekf.mu[0]
         landmark_y = landmark_ekf.mu[1]
 
-        ##STUDENT_CODE: #TODO Q2: Complete measurement model
 
         dx = landmark_x - self.pose[0, 0]
         dy = landmark_y - self.pose[1, 0]
@@ -232,7 +223,6 @@ class Particle(object):
         )
 
 
-        ##END_STUDENT_CODE
         return h, H
 
     def _shape_check(self):
@@ -253,7 +243,6 @@ def low_variance_resampler(particles):
     resampled_particles = []
     weights = [particle.weight for particle in particles]
 
-    ##STUDENT_CODE: #TODO: Implement low variance resampling
     weights = np.asarray(weights, dtype=float)
     weights = weights / np.sum(weights)
     cumulative_weights = np.cumsum(weights)
@@ -272,7 +261,6 @@ def low_variance_resampler(particles):
         particle.weight = 1.0 / N
 
 
-    ##END_STUDENT_CODE:
     return resampled_particles
 
 
@@ -594,13 +582,11 @@ def fast_slam_resampling(particles, t, num_iterations_resample,print_flag=True):
     particles = normalize_weights(particles)
 
     if num_iterations_resample == "selective":
-        ##STUDENT_CODE: #TODO Q4: Implement Selective Resampling
 
         weights = np.array([particle.weight for particle in particles])
         n_effective = 1.0 / np.sum(weights**2)
         selective_resample = n_effective < len(particles) / 2
 
-        ##END_STUDENT_CODE
         if selective_resample:
             if print_flag:
                 print("-> Selective Resampling")
